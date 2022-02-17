@@ -1,0 +1,599 @@
+class UserHandler {
+    
+    static let sharedInstance = UserHandler()
+
+    
+    // MARK: - Splash UserData
+    class func splashUser(params: NSDictionary, success: @escaping (UserDataMode_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.splashGetUser
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = UserDataMode_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    //MARK: - CheckEmail
+    class func chekcEmail(login_type: String, email : String, success: @escaping (UserDataMode_Base) -> Void, failure: @escaping (NetworkError?)-> Void) {
+
+        let url =  Constants.baseUrl+Constants.URL.checkEmail + "email=\(email)" + "&" + "login_type=\(login_type)"
+        print(url)
+
+        NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            let responseModel = UserDataMode_Base(dictionary: dictionary as NSDictionary)
+            print(responseModel!)
+            success(responseModel!)
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    //MARK: - CheckPhone
+    class func chekcPhone(phone : String, success: @escaping (CheckEmailPhone_Base) -> Void, failure: @escaping (NetworkError?)-> Void) {
+
+        let url =  Constants.baseUrl+Constants.URL.checkPhone + "mobile=\(phone)"
+        print(url)
+
+        NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            let responseModel = CheckEmailPhone_Base(dictionary: dictionary as NSDictionary)
+            print(responseModel!)
+            success(responseModel!)
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    
+    // MARK: - SignUp user
+    class func signUpUser(params: NSDictionary, success: @escaping (UserDataMode_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+
+        let url = Constants.baseUrl+Constants.URL.signUp
+        print(url)
+
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+
+            let objUserr = UserDataMode_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary as NSDictionary)
+            success(objUserr!)
+
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - Home Promotion
+    class func getHomePromotion(userID: String, success: @escaping (HomePromotion_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.getHomePromotions + "?user_id=\(userID)"
+        print(url)
+        
+        NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            let responseModel = HomePromotion_Base(dictionary: dictionary as NSDictionary)
+            print(responseModel!)
+            success(responseModel!)
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - Home Painters
+    class func getHomeVendor(userID: String, pageNo: Int, success: @escaping (HomeVendor_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.getHomeVendor + "user_id=\(userID)" + "&" + "page=\(pageNo)"
+        print(url)
+        
+        NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            let responseModel = HomeVendor_Base(dictionary: dictionary as NSDictionary)
+            print(responseModel!)
+            success(responseModel!)
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    
+    // MARK: - UserLocation
+    class func userLocation(params: NSDictionary, success: @escaping (UserDataMode_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.userLocation
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = UserDataMode_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - Login user
+    
+    class func loginUser(params: NSDictionary, success: @escaping (UserDataMode_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+
+        let url = Constants.baseUrl+Constants.URL.login
+        print(url)
+
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+
+            let objUserr = UserDataMode_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - Create Job
+    
+    class func createJob(params: NSDictionary, success: @escaping (CheckEmailPhone_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.createJob
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = CheckEmailPhone_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+            
+        }
+    }
+    
+    // MARK: - Job Details
+    
+    class func jobDetails(params: NSDictionary, success: @escaping (JobDetails_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.jobDetails
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = JobDetails_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+            
+        }
+    }
+    
+    // MARK: - CreateD
+    
+    class func created(params: NSDictionary, success: @escaping (Created_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.createdJob
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = Created_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    class func bookedHiring(params: NSDictionary, success: @escaping (Created_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.bookedHiring
+        print(url)
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            let objUserr = Created_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - Delete Job
+    
+    class func deletJob(params: NSDictionary, success: @escaping (Created_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.deleteJob
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = Created_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - Hire/Unhire
+    
+    class func hireUnhire(params: NSDictionary, success: @escaping (JobDetails_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.hireUnhire
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = JobDetails_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - FinishHiring
+    
+    class func finishHiring(params: NSDictionary, success: @escaping (GenericModel)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.finishHiring
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = GenericModel(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+            
+        }
+    }
+    
+    // MARK: - Complete JOb
+    
+    class func completed(params: NSDictionary, success: @escaping (Created_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.completeJob
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = Created_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+            
+        }
+    }
+    
+    // MARK: - finish JOb
+    
+    class func finishJobDone(params: NSDictionary, success: @escaping (GenericModel)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.finishJobDone
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = GenericModel(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+            
+        }
+    }
+    
+    // MARK: - Update Personal Data
+    
+    class func updatePersonalData(params: NSDictionary, success: @escaping (UserDataMode_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.updatePersonalData
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = UserDataMode_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+            
+        }
+    }
+    
+    // MARK: - Update Password
+    
+    class func updatePassword(params: NSDictionary, success: @escaping (GenericModel)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.updatePassword
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = GenericModel(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - Rating
+    
+    class func ratePainter(params: NSDictionary, success: @escaping (GenericModel)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.ratingPainter
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = GenericModel(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - Painter Profile
+    
+    class func painterProfile(vendorID: Int, params: NSDictionary, success: @escaping (PainterProfile_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.painterProfile + "/\(vendorID)"
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = PainterProfile_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - Painter Project Details
+    
+    class func painterProjectDetails(params: NSDictionary, success: @escaping (PainterProjectDetail_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.painterProjectDetails
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = PainterProjectDetail_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+
+    // MARK: - Report Painter
+    
+    class func reportPainter(params: NSDictionary, success: @escaping (GenericModel)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.reportPainter
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = GenericModel(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - Favourit Painter
+    
+    class func favouritPainter(params: NSDictionary, success: @escaping (GenericModel)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.favPainter
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = GenericModel(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - List of Favourit Painter
+    
+    class func listFavPainter(params: NSDictionary, success: @escaping (ListOfFavPainter_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.listFavPainter
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = ListOfFavPainter_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - Search AutoSuggest
+    
+    class func autoSuggestCall(params: NSDictionary, success: @escaping (AutoSuggestBase)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.autoSuggest
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = AutoSuggestBase(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - Search
+    
+    class func searching(params: NSDictionary, success: @escaping (ListOfFavPainter_Base)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.searching
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = ListOfFavPainter_Base(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - forgotPass
+    
+    class func forgotPass(params: NSDictionary, success: @escaping (GenericModel)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.forgotPass
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = GenericModel(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    // MARK: - checkToFinishOrNot
+    
+    class func checkToFinish(params: NSDictionary, success: @escaping (GenericModel)-> Void, failure: @escaping (NetworkError?)->Void){
+        
+        let url = Constants.baseUrl+Constants.URL.checkToHire
+        print(url)
+        
+        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: AnyObject]
+            print(dictionary)
+            
+            let objUserr = GenericModel(dictionary: (dictionary as NSDictionary) as! [String : Any] as NSDictionary)
+            success(objUserr!)
+            
+        }) { (error) in
+            print(error)
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+}
